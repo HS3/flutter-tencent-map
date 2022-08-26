@@ -11,6 +11,9 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+  double? latitude = 39.909;
+  double? longitude = 116.397;
+
   @override
   void initState() {
     super.initState();
@@ -25,21 +28,21 @@ class _LocationPageState extends State<LocationPage> {
         mapType: context.isDark ? MapType.dark : MapType.normal,
         myLocationEnabled: true,
         myLocationButtonEnabled: true,
+        scaleControlsEnabled: true,
         myLocationStyle: MyLocationStyle(
-          myLocationType: MyLocationType.followNoCenter,
+          myLocationType: MyLocationType.locationRotate,
         ),
-        onLocation: (location) =>
-            // ignore: avoid_print
-            print('${location.latitude}, ${location.longitude}'),
+        onLocation: (location) {
+          print('经纬度1=${location.latitude}, ${location.longitude}');
+          latitude = location.latitude;
+          longitude = location.longitude;
+        },
         onMapCreated: (controller) async {
-          controller.moveCamera(
-            CameraPosition(
-              target: LatLng(latitude: 39.909, longitude: 116.397),
-            ),
-          );
-          controller.setMyLocation(
-            Location(latitude: 39.909, longitude: 116.397, accuracy: 1000),
-          );
+          print('经纬度2=onMapCreated');
+        },
+        onCameraIdle: (value) {
+          print(
+              '经纬度3=地图视野结束改变事件回调函数=${value.target?.latitude},${value.target?.longitude}');
         },
       ),
     );

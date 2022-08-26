@@ -1,4 +1,4 @@
-package qiuxiang.tencent_map
+    package qiuxiang.tencent_map
 
 import android.graphics.BitmapFactory
 import android.location.Location
